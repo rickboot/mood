@@ -39,14 +39,13 @@ model Analysis {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  entryID      String 
-  journalEntry JournalEntry @relation(fields: [entryID], references: [id])
-
+  entryId      String 
+  journalEntry JournalEntry @relation(fields: [entryId], references: [id])
   subject      String
   mood         String
   summary      String       @db.Text
   color        String
   negative     Boolean
 
-  @@unique([entryID]) // alternate use @unique attribute on entryId above?
+  @@unique([entryId]) // alternate use @unique attribute on entryId above?
 }

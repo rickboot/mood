@@ -6,6 +6,7 @@ import { NextResponse } from 'next/server';
 
 export const POST = async () => {
   const user = await getUserByClerkId();
+
   const entry = await prisma.journalEntry.create({
     data: {
       userId: user.id,
@@ -13,14 +14,13 @@ export const POST = async () => {
     },
   });
 
-  //todo - move to PATCH?
-
   const analysis = await analyzeEntry(entry.content);
-  console.log('🚀 ~ file: route.ts:19 ~ POST ~ analysis:', analysis);
+
+  console.log('anal test');
 
   await prisma.analysis.create({
     data: {
-      entryID: entry.id,
+      entryId: entry.id,
       ...analysis,
     },
   });
