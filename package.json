@@ -15,7 +15,8 @@
     "next": "latest",
     "react": "latest",
     "react-autosave": "^0.4.2",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "recharts": "^2.8.0"
   },
   "devDependencies": {
     "@types/node": "latest",

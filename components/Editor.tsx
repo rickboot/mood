@@ -4,20 +4,34 @@ import { useState } from 'react';
 import { updateEntry } from '@/utils/api';
 
 const Editor = ({ entry }) => {
-  const [value, setValue] = useState(entry.content);
-  const [isLoading, setIsLoading] = useState(false);
+  const [text, setText] = useState(entry.content);
   const [analysis, setAnalysis] = useState(entry.analysis);
+  const [isLoading, setIsLoading] = useState(false);
 
   useAutosave({
-    data: value,
+    data: text,
     interval: 2000,
-    onSave: async (_value) => {
+    onSave: async (_text: string) => {
       setIsLoading(true);
-      const data = await updateEntry(entry.id, { content: _value });
+      const data = await updateEntry(entry.id, { content: _text });
+      console.log('🚀 ~ file: Editor.tsx:17 ~ onSave: ~ data:', data);
       setAnalysis(data.analysis);
       setIsLoading(false);
     },
   });
+
+  // useAutosave({
+  //   data: text,
+  //   onSave: async (_text) => {
+  //     if (_text === entry.content) return;
+  //     setIsLoading(true);
+
+  //     const { data } = await updateEntry(entry.id, { content: _text });
+
+  //     setAnalysis(data.analysis);
+  //     setIsLoading(false);
+  //   },
+  // });
 
   const { summary, subject, mood, negative, color } = analysis;
 
@@ -34,8 +48,8 @@ const Editor = ({ entry }) => {
         {isLoading && '...loading'}
         <textarea
           className="h-full w-full p-8 text-xl outline-none"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
       </div>
       <div className="border-l border-black/10">

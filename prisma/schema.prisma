@@ -19,6 +19,7 @@ model User {
   clerkId String         @unique
   email   String         @unique
   entries JournalEntry[]
+  analyses Analysis[]
 }
 
 model JournalEntry {
@@ -27,8 +28,8 @@ model JournalEntry {
   updatedAt DateTime @updatedAt
 
   userId   String
-  user     User      @relation(fields: [userId], references: [id]) // odd syntax...
-  content  String    @db.Text // non-fixed length text
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content  String    @db.Text
   analysis Analysis?
 
   @@unique([userId, id]) 
@@ -40,12 +41,18 @@ model Analysis {
   updatedAt DateTime @updatedAt
 
   entryId      String 
-  journalEntry JournalEntry @relation(fields: [entryId], references: [id])
+  journalEntry JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+
+  userId       String
+  user         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   subject      String
   mood         String
   summary      String       @db.Text
   color        String
   negative     Boolean
+  sentimentScore    Float        @default(0)
 
-  @@unique([entryId]) // alternate use @unique attribute on entryId above?
+  @@unique([entryId])
+  @@index([userId])
 }

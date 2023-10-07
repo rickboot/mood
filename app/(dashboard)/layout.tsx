@@ -1,7 +1,6 @@
 import { UserButton } from '@clerk/nextjs';
 import Link from 'next/link';
 
-//todo add type for children
 const DashboardLayout = ({ children }) => {
   const nav = [
     { href: '/', label: 'Home' },
@@ -12,7 +11,7 @@ const DashboardLayout = ({ children }) => {
   return (
     //* full page
     <div className="h-screen w-screen relative">
-      {/* //* left nav bar */}
+      {/* //* left col - nav bar */}
       <aside className="absolute top-0 left-0 h-full w-[200px] border-r border-black/10">
         <div className="px-4 my-4">
           <span className="text-3xl">Mood</span>
@@ -26,7 +25,7 @@ const DashboardLayout = ({ children }) => {
         </ul>
       </aside>
 
-      {/* //* right app */}
+      {/* //* right col - top nav and journal list */}
       <div className="ml-[200px] h-full">
         {/* //* top nav */}
         <header className="h-[60px] border-b border-black/10 ">
@@ -34,7 +33,7 @@ const DashboardLayout = ({ children }) => {
             <UserButton />
           </div>
         </header>
-        {/* //* journal area */}
+        {/* //* journal list */}
         <div className="h-[calc(100vh-60px)]">{children}</div>
       </div>
     </div>

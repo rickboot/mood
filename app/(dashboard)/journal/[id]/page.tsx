@@ -3,7 +3,8 @@ import { getUserByClerkId } from '@/utils/auth';
 import { prisma } from '@/utils/db';
 
 const getEntry = async (entryId: string) => {
-  const user = await getUserByClerkId(); // to ensure entry belongs to user
+  const user = await getUserByClerkId(); // ensure entry belongs to user
+
   const entry = await prisma.journalEntry.findUnique({
     where: {
       userId_id: {

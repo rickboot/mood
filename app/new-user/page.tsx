@@ -3,19 +3,16 @@ import { currentUser } from '@clerk/nextjs';
 import { redirect } from 'next/navigation';
 
 const createNewUser = async () => {
-  // logged-in clerk user
-  const user = await currentUser();
+  const user = await currentUser(); //* logged-in clerk user
 
-  // check if clerk user is in db
-  const match = await prisma.user.findUnique({
+  const inDatabase = await prisma.user.findUnique({
     where: {
       clerkId: user?.id as string,
     },
   });
 
-  // if not, add them
-  if (!match) {
-    const result = await prisma.user.create({
+  if (!inDatabase) {
+    await prisma.user.create({
       data: {
         clerkId: user?.id as string,
         email: user?.emailAddresses[0].emailAddress as string,
@@ -27,7 +24,7 @@ const createNewUser = async () => {
 
 const NewUser = async () => {
   await createNewUser();
-  return <div>...loading</div>; // alt create next-style loading page in folder
+  return <div>...saving</div>;
 };
 
 export default NewUser;
