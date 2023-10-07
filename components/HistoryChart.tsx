@@ -36,7 +36,7 @@ const HistoryChart = ({ data }) => {
         width={300}
         height={100}
         data={analyses}
-        margin={{ top: 20, right: 20, bottom: 10, left: 20 }}
+        margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
       >
         <Line
           type="monotone"
